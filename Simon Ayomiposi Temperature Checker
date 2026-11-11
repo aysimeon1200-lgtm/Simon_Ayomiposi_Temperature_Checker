@@ -1,0 +1,63 @@
+# Temperature Monitor - ND1 Mechatronics
+# Simple project for CTE123
+
+def check_temperature(temp):
+    """My function: check if temperature is safe"""
+    if temp > 75:
+        return "DANGER! Machine too hot, shut down!"
+    elif temp > 50:
+        return "Warning: Machine getting hot"
+    else:
+        return "Normal: Machine is okay"
+
+# Main program
+print("=== MACHINE TEMPERATURE CHECKER ===")
+
+# List to store temperatures
+temps = []
+
+# Loop 5 times to collect 5 readings
+for i in range(5):
+    while True:
+        try:
+            t = float(input(f"Enter temperature {i+1} (in C): "))
+            temps.append(t)
+            break
+        except ValueError:
+            print("Please enter number only, like 45 or 60.5")
+
+# Now check highest, lowest, average - very simple
+highest = max(temps)
+lowest = min(temps)
+average = sum(temps) / len(temps)
+
+print("\n--- RESULT ---")
+print(f"All readings: {temps}")
+print(f"Highest: {highest} C")
+print(f"Lowest: {lowest} C")
+print(f"Average: {average:.1f} C")
+
+# Check each one with if/else
+print("\n--- SAFETY CHECK ---")
+for t in temps:
+    message = check_temperature(t)
+    print(f"{t} C -> {message}")
+
+# MY OWN TWIST: Simple and useful
+print("\n--- My Twist: Daily Report ---")
+hot_count = 0
+for t in temps:
+    if t > 50:
+        hot_count += 1
+
+print(f"Number of hot readings: {hot_count} out of 5")
+
+if hot_count >= 3:
+    print("Advice: Call technician, machine needs cooling!")
+else:
+    print("Advice: Machine can continue working.")
+
+if average > 65:
+    print("Overall: OVERHEATING - Stop machine now!")
+else:
+    print("Overall: Machine is safe for now.")
